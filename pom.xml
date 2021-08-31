@@ -8,7 +8,7 @@
         <version>2.5.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.mastercard.dps</groupId>
+    <groupId>com.mastercard.emvcs</groupId>
     <artifactId>springbootdemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springbootdemo</name>
@@ -62,6 +62,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-mockmvc</artifactId>
             <scope>test</scope>
@@ -71,10 +76,6 @@
             <artifactId>spring-web</artifactId>
             <version>5.3.8</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,12 +90,6 @@
         <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp -->
         <dependency>
             <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-amqp</artifactId>
-            <version>2.3.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -104,6 +99,23 @@
             <artifactId>json-smart</artifactId>
             <version>2.4.7</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mastercard.emvcs</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mastercard.emvcs</groupId>
+            <artifactId>springbootdemo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.mastercard.dps.springbootdemo;
+package com.mastercard.emvcs.springbootdemo;
 
 import org.springframework.stereotype.Component;
 

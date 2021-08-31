@@ -1,4 +1,4 @@
-package com.mastercard.dps.springbootdemo;
+package com.mastercard.emvcs.springbootdemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

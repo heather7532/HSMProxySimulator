@@ -1,9 +1,14 @@
-package com.mastercard.dps.springbootdemo;
+package com.mastercard.emvcs.springbootdemo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.mastercard.emvcs.SignCSRResponse;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -15,14 +20,15 @@ public class SignCSRController {
     private RabbitTemplate rabbitTemplate;
     private Receiver receiver;
 
-
     public SignCSRController(Receiver receiver, RabbitTemplate rabbitTemplate) {
         this.receiver = receiver;
         this.rabbitTemplate = rabbitTemplate;
     }
 
 
-    @GetMapping("/signcsr")
+    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            method = RequestMethod.GET,
+            value = "/signcsr")
     public SignCSRResponse signCSR(@RequestParam(value = "msg",
             defaultValue = "Do you like my new cert?") String msg) throws InterruptedException {
 
@@ -30,11 +36,20 @@ public class SignCSRController {
         rabbitTemplate = rabbitTemplate;
 
         System.out.println("Sending message...");
-        //rabbitTemplate.convertAndSend(ClientConfiguration.topicExchangeName, "tc.proxy.test", msg);
         SignCSRResponse response = null;
         response = new SignCSRResponse(msg);
-        rabbitTemplate.convertAndSend(ClientConfiguration.topicExchangeName, "tc.proxy.test", response);
-        //receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+        //make it a json string
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(response);
+            System.out.println("ResultingJSONstring = " + json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        rabbitTemplate.convertAndSend(ClientConfiguration.topicExchangeName, ClientConfiguration.routingKey, json);
+        System.out.println(response.toString());
         return response;
     }
 }
